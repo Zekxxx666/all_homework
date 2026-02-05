@@ -211,7 +211,9 @@ def menu():
         GAME_RUN = False
 
         return GAME_RUN
-            
+
+while GAME_RUN:
+    menu()     
 
 
 
