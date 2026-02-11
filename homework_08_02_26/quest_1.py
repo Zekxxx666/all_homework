@@ -13,13 +13,12 @@ class GamePC:
     weight: int
     price: int
     count: int
-
 PCs = []
 
 def find_ind_PC_by_id(PCs, id):
-    for i in range(len(PCs)):
-        if PCs[i].id == id:
-            return i
+    for ind in range(len(PCs)):
+        if PCs[ind].id == id:
+            return ind
     else:
         return -1
     
@@ -61,7 +60,11 @@ def print_PC(PCs):
     print(f"{'ID':<8}{'Изготовитель':<15}{'CPU':<15}{'GPU':<15}{'RAM':<15}{'SSD':<15}{'вес':<7}{'цена':<10}{'количество товаров':<15}")
 
     for i in range(len(PCs)):
-        print(f"{PCs[i].id:<8}{PCs[i].fabricator:<15}{PCs[i].cpu:<15}{PCs[i].gpu:<15}{PCs[i].ram:<15}{PCs[i].ssd:<15}{PCs[i].weight:<7}{PCs[i].price:<10}{PCs[i].count:<15}")
+        print(
+            f"{PCs[i].id:<8}{PCs[i].fabricator:<15}{PCs[i].cpu:<15}"
+            f"{PCs[i].gpu:<15}{PCs[i].ram:<15}{PCs[i].ssd:<15}"
+            f"{PCs[i].weight:<7}{PCs[i].price:<10}{PCs[i].count:<15}"
+            )
 
 def print_best_bat(PCs):
     best = PCs[0].price
@@ -81,9 +84,17 @@ def print_best_bat(PCs):
 
     print(f"{'ID':<8}{'Изготовитель':<15}{'CPU':<15}{'GPU':<15}{'RAM':<15}{'SSD':<15}{'вес':<7}{'цена':<10}{'количество товаров':<15}")
     print("Самый дорогой:")
-    print(f"{PCs[ind_best].id:<8}{PCs[ind_best].fabricator:<15}{PCs[ind_best].cpu:<15}{PCs[ind_best].gpu:<15}{PCs[ind_best].ram:<15}{PCs[ind_best].ssd:<15}{PCs[ind_best].weight:<7}{PCs[ind_best].price:<10}{PCs[ind_best].count:<15}")
+    print(
+        f"{PCs[ind_best].id:<8}{PCs[ind_best].fabricator:<15}{PCs[ind_best].cpu:<15}"
+        f"{PCs[ind_best].gpu:<15}{PCs[ind_best].ram:<15}{PCs[ind_best].ssd:<15}"
+        f"{PCs[ind_best].weight:<7}{PCs[ind_best].price:<10}{PCs[ind_best].count:<15}"
+        )
     print("Самый дешёвый:")
-    print(f"{PCs[ind_bad].id:<8}{PCs[ind_bad].fabricator:<15}{PCs[ind_bad].cpu:<15}{PCs[ind_bad].gpu:<15}{PCs[ind_bad].ram:<15}{PCs[ind_bad].ssd:<15}{PCs[ind_bad].weight:<7}{PCs[ind_bad].price:<10}{PCs[ind_bad].count:<15}")        
+    print(
+        f"{PCs[ind_bad].id:<8}{PCs[ind_bad].fabricator:<15}{PCs[ind_bad].cpu:<15}"
+        f"{PCs[ind_bad].gpu:<15}{PCs[ind_bad].ram:<15}{PCs[ind_bad].ssd:<15}"
+        f"{PCs[ind_bad].weight:<7}{PCs[ind_bad].price:<10}{PCs[ind_bad].count:<15}"
+        )        
 
 def up_RAM(PCs, id, up):
     os.system("cls")
@@ -123,7 +134,11 @@ def print_ind_PC(PCs, ind):
     os.system("cls")
     try:
         print(f"{'ID':<8}{'Изготовитель':<15}{'CPU':<15}{'GPU':<15}{'RAM':<15}{'SSD':<15}{'вес':<7}{'цена':<10}{'количество товаров':<15}")
-        print(f"{PCs[ind].id:<8}{PCs[ind].fabricator:<15}{PCs[ind].cpu:<15}{PCs[ind].gpu:<15}{PCs[ind].ram:<15}{PCs[ind].ssd:<15}{PCs[ind].weight:<7}{PCs[ind].price:<10}{PCs[ind].count:<15}")
+        print(
+            f"{PCs[ind].id:<8}{PCs[ind].fabricator:<15}{PCs[ind].cpu:<15}"
+            f"{PCs[ind].gpu:<15}{PCs[ind].ram:<15}{PCs[ind].ssd:<15}"
+            f"{PCs[ind].weight:<7}{PCs[ind].price:<10}{PCs[ind].count:<15}"
+            )
     except:
         print(f"Компьютера с индексом {ind} не существует")
 
@@ -137,7 +152,11 @@ def print_only_heading():
     print(f"{'ID':<8}{'Изготовитель':<15}{'CPU':<15}{'GPU':<15}{'RAM':<15}{'SSD':<15}{'вес':<7}{'цена':<10}{'количество товаров':<15}")
 
 def print_1_pc(PC):
-    print(f"{PC.id:<8}{PC.fabricator:<15}{PC.cpu:<15}{PC.gpu:<15}{PC.ram:<15}{PC.ssd:<15}{PC.weight:<7}{PC.price:<10}{PC.count:<15}")
+    print(
+        f"{PC.id:<8}{PC.fabricator:<15}{PC.cpu:<15}"
+        f"{PC.gpu:<15}{PC.ram:<15}{PC.ssd:<15}"
+        f"{PC.weight:<7}{PC.price:<10}{PC.count:<15}"
+        )
 
 def sorted_PC_price(PCs):
     sort = True

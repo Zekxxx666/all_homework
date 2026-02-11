@@ -9,12 +9,34 @@ class OnlineCourse:
     platform: str
     language: str
     time: int
-    lvl_hard: int
+    level_hard: int
     price: int
     rate: float
     count_stud: int
 
 Courses = []
+
+def input_correct(text):
+    is_correct_input = False
+    while is_correct_input == False:
+        try:
+            result = int(input(text))
+            is_correct_input = True
+        except:
+            print("Ошибка ввода, попробуй ещё раз")
+            is_correct_input = False
+    return result
+
+def input_correct_float(text):
+    is_correct_input = False
+    while is_correct_input == False:
+        try:
+            result = float(input(text))
+            is_correct_input = True
+        except:
+            print("Ошибка ввода, попробуй ещё раз")
+            is_correct_input = False
+    return result
 
 def add_course(Courses, cours):
     global ID
@@ -29,12 +51,12 @@ def import_course():
     name = input("введите название курса:")
     platform = input("введите название платформы:")
     language = input("введите язык курса:")
-    time = int(input("введите длительность курса (часы):"))
-    lvl_hard = int(input("введите уровень сложносли (1 - легко, 2 - средне, 3 - продвинутый):"))
-    price = int(input("введите стоимость курса:"))
-    rate = float(input("введите рейтинг курса:"))
-    count_stud = int(input("введите количество студентов:"))
-    return OnlineCourse(0, name, platform, language, time, lvl_hard, price, rate, count_stud)
+    time = input_correct("введите длительность курса (часы):")
+    level_hard = input_correct("введите уровень сложносли (1 - легко, 2 - средне, 3 - продвинутый):")
+    price = input_correct("введите стоимость курса:")
+    rate = input_correct("введите рейтинг курса:")
+    count_stud = input_correct("введите количество студентов:")
+    return OnlineCourse(0, name, platform, language, time, level_hard, price, rate, count_stud)
 
 def course_time(Courses, max_time):
     for i in range(len(Courses)):
@@ -75,27 +97,29 @@ def find_min_rate(Courses):
     print_1_cours(min_course)
 
 def del_cour_under_4(Courses):
-    j = 0
-    for i in range(len(Courses)):
-        if Courses[i].rate < 4:
-            Courses.pop(i)
-            j += 1
-    print(f"успешно удалено {j} курсов")
+    del_cours = 0
+    while True:
+        for i in range(len(Courses)):
+            if Courses[i].rate < 4:
+                Courses.pop(i)
+                del_cours += 1
+                continue
+        break
+    print(f"успешно удалено {del_cours} курсов")
 
 def sort_time(Courses):
-    j = 1
-    while True:
-        if j == 0:
-            break
-        j = 0
+    j = False
+    while j == False:
+        j = True
         mid_glass = 0
 
         for i in range(len(Courses) - 1):
-            if Courses[i].time > Courses[i + 1].time:
+            if Courses[i].time < Courses[i + 1].time:
                 mid_glass = Courses[i + 1].time
                 Courses[i + 1] = Courses[i].time
                 Courses[i] = mid_glass
-    Courses.reverse()
+                j = False
+
     print_all_courses(Courses)
 
 def print_all_courses(Courses):
@@ -104,19 +128,18 @@ def print_all_courses(Courses):
         print(f"{Courses[i].id:<15}{Courses[i].name:<15}{Courses[i].platform:<15}{Courses[i].language:<20}{Courses[i].time:<15}{Courses[i].lvl_hard:<15}{Courses[i].price:<15}{Courses[i].rate:<15}{Courses[i].count_stud:<20}")
 
 def sort_stud(Courses):
-    j = 1
-    while True:
-        if j == 0:
-            break
-        j = 0
+    j = False
+    while j == False:
+        j = True
         mid_glass = 0
 
         for i in range(len(Courses) - 1):
-            if Courses[i].studs > Courses[i + 1].studs:
+            if Courses[i].studs < Courses[i + 1].studs:
                 mid_glass = Courses[i + 1]
                 Courses[i + 1] = Courses[i]
                 Courses[i] = mid_glass
-    Courses.reverse()
+                j = False
+
     print_all_courses(Courses)
 
 def search_platform(Courses, platform):
@@ -126,7 +149,7 @@ def search_platform(Courses, platform):
 
 def search_lvl_hard(Courses, lvl):
     for i in range(len(Courses)):
-        if Courses[i].lvl_hard == lvl:
+        if Courses[i].level_hard == lvl:
             print_1_cours(Courses[i])
 
 def egit_all_platform(Courses, platform):

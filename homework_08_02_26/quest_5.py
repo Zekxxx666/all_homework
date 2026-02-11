@@ -15,6 +15,17 @@ class SportEqup:
     count: int
     request_fix: str
 
+def input_correct(text):
+    is_correct_input = False
+    while is_correct_input == False:
+        try:
+            result = int(input(text))
+            is_correct_input = True
+        except:
+            print("Ошибка ввода, попробуй ещё раз")
+            is_correct_input = False
+    return result
+
 def add_equp(Equpments, equp):
     global ID
 
@@ -28,33 +39,35 @@ def input_equp():
     name = input("введите название оборудования:")
     sport = input("введите вид спорта где это оборудование используется:")
     material = input("введите материал из которого сделано оборудование:")
-    weight = int(input("введите вес оборудования:"))
+    weight = input_correct("введите вес оборудования:")
     size = input("введите размер оборудования:")
-    price = int(input("введите стоимость товара:"))
-    status = int(input("введите статус оборудования (1 - новый, 2 - использованный, 3 - сломанный):"))
-    count = int(input("введите количество товара на складе:"))
+    price = input_correct("введите стоимость товара:")
+    status = input_correct("введите статус оборудования (1 - новый, 2 - использованный, 3 - сломанный):")
+    count = input_correct("введите количество товара на складе:")
     request_fix = "-"
     return SportEqup(0, name, sport, material, weight, size, price, status, count, request_fix)
 
 def del_equp_count_0(Equpments):
-    for i in range(len(Equpments)):
-        if Equpments[i].count == 0:
-            Equpments.pop(i)
+    while True:
+        for i in range(len(Equpments)):
+            if Equpments[i].count == 0:
+                Equpments.pop(i)
+                continue
+        break
 
 def find_max_weight_equp(Equpments):
-    while True:
-        if j == 0:
-            break
-        j = 0
+    j = False
+    while j == False:
+        j = True
         mid_glass = 0
 
         for i in range(len(Equpments) - 1):
-            if Equpments[i].weight > Equpments[i + 1].weight:
+            if Equpments[i].weight < Equpments[i + 1].weight:
                 mid_glass = Equpments[i + 1]
                 Equpments[i + 1] = Equpments[i]
                 Equpments[i] = mid_glass
+                j = False
 
-    Equpments.reverse()
     if len(Equpments) - 1 > 0:
         print_only_heading()
         print_1_equp(Equpments[0])
@@ -97,26 +110,24 @@ def under_count_by_id(Equpments, id, under):
         print(f"товара с id {id} не сушествует")
 
 def sorted_by_price(Equpments):
-    while True:
-        if j == 0:
-            break
-        j = 0
+    j = False
+    while j == False:
+        j = True
         mid_glass = 0
 
         for i in range(len(Equpments) - 1):
-            if Equpments[i].price > Equpments[i + 1].price:
+            if Equpments[i].price < Equpments[i + 1].price:
                 mid_glass = Equpments[i + 1]
                 Equpments[i + 1] = Equpments[i]
                 Equpments[i] = mid_glass
+                j = False
 
-    Equpments.reverse()
     print_all_equp(Equpments)
 
 def sorted_by_count(Equpments):
-    while True:
-        if j == 0:
-            break
-        j = 0
+    j = False
+    while j == False:
+        j = True
         mid_glass = 0
 
         for i in range(len(Equpments) - 1):
@@ -124,7 +135,8 @@ def sorted_by_count(Equpments):
                 mid_glass = Equpments[i + 1]
                 Equpments[i + 1] = Equpments[i]
                 Equpments[i] = mid_glass
-    Equpments.reverse()
+                j = False  
+
     print_all_equp(Equpments)
 
 def search_sport(Equpments, sport):
@@ -211,9 +223,10 @@ def menu():
         GAME_RUN = False
 
         return GAME_RUN
-
+    
 while GAME_RUN:
-    menu()     
+    menu()
+            
 
 
 

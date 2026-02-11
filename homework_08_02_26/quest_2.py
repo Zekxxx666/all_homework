@@ -7,7 +7,7 @@ class Game:
     id: int
     name: str
     genre: int
-    Platform: str
+    platform: str
     age: int
     price: int
     rate: float
@@ -17,6 +17,17 @@ class Game:
 
 Games = []
 Games.append(Game(1, "bss", 4, "Boblox", 18, 0, 10, "good", 1000000, "-"))
+
+def input_correct(text):
+    is_correct_input = False
+    while is_correct_input == False:
+        try:
+            result = int(input(text))
+            is_correct_input = True
+        except:
+            print("Ошибка ввода, попробуй ещё раз")
+            is_correct_input = False
+    return result
 
 def add_game(Games, game):
     global ID
@@ -29,15 +40,15 @@ def add_game(Games, game):
 
 def game_input():
     name = input("введите название игры:")
-    genre = int(input("Введите жанр игры (1 - Шутеры, 2 - РПГ, 3 - Стратегии, 4 - приключения):"))
-    Platform = input("введите платформу игры:")
-    age = int(input("введите возрастное ограничение игры:"))
-    price = int(input("введите стоимость игры:"))
-    rate = int(input("введите оценку игроков:"))
+    genre = input_correct("Введите жанр игры (1 - Шутеры, 2 - РПГ, 3 - Стратегии, 4 - приключения):")
+    platform = input("введите платформу игры:")
+    age = input_correct("введите возрастное ограничение игры:")
+    price = input_correct("введите стоимость игры:")
+    rate = input_correct("введите оценку игроков:")
     state = input("введите статус игры:")
-    copy = int(input("введите количество копий:"))
+    copy = input_correct("введите количество копий:")
     hit = "-"
-    return Game(0, name, genre, Platform, age, price, rate, state, copy, hit)
+    return Game(0, name, genre, platform, age, price, rate, state, copy, hit)
 
 def find_best_rate(Games):
     last_rate = 0
@@ -48,21 +59,30 @@ def find_best_rate(Games):
             ind = i
     print_1_game(Games[ind])
     
-
 def print_1_game(Game):
-    print(f"{'id':<13}{'название игры':<15}{'жанр':<15}{'Платформа':<15}{'возрастное ограничение':<25}{'цена':<13}{'оценка':<15}{'статус':<15}{'копий в наличии':<18}{'в Хите':<5}")
-    print(f"{Game.id:<13}{Game.name:<15}{Game.genre:<15}{Game.Platform:<15}{Game.age:<25}{Game.price:<13}{Game.rate:<15}{Game.state:<15}{Game.copy:<18}{Game.hit:<5}")
+    print(
+        f"{'id':<13}{'название игры':<15}{'жанр':<15}"
+        f"{'Платформа':<15}{'возрастное ограничение':<25}{'цена':<13}"
+        f"{'оценка':<15}{'статус':<15}{'копий в наличии':<18}{'в Хите':<5}"
+        )
+    print(
+        f"{Game.id:<13}{Game.name:<15}{Game.genre:<15}"
+        f"{Game.Platform:<15}{Game.age:<25}{Game.price:<13}"
+        f"{Game.rate:<15}{Game.state:<15}{Game.copy:<18}{Game.hit:<5}"
+        )
 
 def del_rate_dead(Games):
     del_game = 0
-    for i in range(len(Games)):
-        if Games[i].rate == 0:
-            Games.pop(i)
-            del_game += 1
+    while True:
+        for i in range(len(Games)):
+            if Games[i].rate == 0:
+                Games.pop(i)
+                del_game += 1
+                continue
+        break
 
     print(f"было удалено {del_game} игр")
     
-
 def mid_price(Games):
     all_price = 0
     for i in range(len(Games)):
@@ -85,21 +105,18 @@ def sale_ganre(Games, ganre, sales):
     print(f"успешно изменена стоимость {sale} игр")
 
 def sorted_game_rate(Games):
-    j = 0
-    while True:
-        if j == 0:
-            break
-        j = 0
+    j = False
+    while j == False:
+        j = True
         mid_glass = 0
         
         for i in range(len(Games) - 1):
-            if Games[i].rate > Games[i + 1].rate:
+            if Games[i].rate < Games[i + 1].rate:
                 mid_glass = Games[i + 1]
                 Games[i + 1] = Games[i]
                 Games[i] = mid_glass
-                j += 1
-    
-    Games.reverse()
+                j = False
+
     print_all_Game(Games)
 
 def print_all_Game(Games):
@@ -108,11 +125,9 @@ def print_all_Game(Games):
         print(f"{Games[i].id:<13}{Games[i].name:<15}{Games[i].genre:<15}{Games[i].Platform:<15}{Games[i].age:<25}{Games[i].price:<13}{Games[i].rate:<15}{Games[i].state:<15}{Games[i].copy:<18}{Games[i].hit:<5}")
 
 def sort_alphabet(Games):
-    j = 1
-    while True:
-        if j == 0:
-            break
-        j = 0
+    j = False
+    while j == False:
+        j = True
         mid_glass = 0
         
         for i in range(len(Games) - 1):
@@ -120,7 +135,7 @@ def sort_alphabet(Games):
                 mid_glass = Games[i + 1]
                 Games[i + 1] = Games[i]
                 Games[i] = mid_glass
-                j += 1
+                j = False
     
     print_all_Game(Games)
 
@@ -136,7 +151,7 @@ def filter_game_age_down(Games,age):
 
 def filter_game_platform(Games, platform):
     for i in range(len(Games)):
-        if Games[i].Platform == platform:
+        if Games[i].platform == platform:
             print(Games[i])
 
 def find_game_id(Games, name):
@@ -172,23 +187,23 @@ def menu():
     elif inpud == 3:
         mid_price(Games)
     elif inpud == 4:
-        ganre = int(input("Введите жанр игры (1 - Шутеры, 2 - РПГ, 3 - Стратегии, 4 - приключения):"))
-        sales = int(input("введите на сколько % вы хотите понизить стоимость:"))
+        ganre = input_correct("Введите жанр игры (1 - Шутеры, 2 - РПГ, 3 - Стратегии, 4 - приключения):")
+        sales = input_correct("введите на сколько % вы хотите понизить стоимость:")
 
         sale_ganre(Games, ganre, sales)
     elif inpud == 5:
-        input_5 = int(input("введите как вы хотите отсортировать игры(1 - по рейтенгу, 2 - по алфавиту):"))
+        input_5 = input_correct("введите как вы хотите отсортировать игры(1 - по рейтенгу, 2 - по алфавиту):")
 
         if input_5 == 1:
             sorted_game_rate(Games)
         else:
             sort_alphabet(Games)
     elif inpud == 6:
-        input_6 = int(input("введите как вы хотите отфильтровать игры (1 - по возрасту, 2 - по платформе):"))
+        input_6 = input_correct("введите как вы хотите отфильтровать игры (1 - по возрасту, 2 - по платформе):")
 
         if input_6 == 1:
-            up_down = int(input("отсортировать (1 - больше, 2 - меньше):"))
-            age = int(input("введите возраст:"))
+            up_down = input_correct("отсортировать (1 - больше, 2 - меньше):")
+            age = input_correct("введите возраст:")
             if up_down == 1:
                 filter_game_age_up(Games, age)
             else:
@@ -197,7 +212,7 @@ def menu():
             platform = input("введите платформу:")
             filter_game_platform(Games, platform)
     elif inpud == 7:
-        id = input("введите название игры игры:")
+        id = input_correct("введите название игры игры:")
         find_game_id(Games, id)
     elif inpud == 8:
         add_game(Games)
